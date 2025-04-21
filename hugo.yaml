@@ -6,9 +6,9 @@ relativeURLs: false
 canonifyURLs: true
 uglyURLs: false
 
-build:
-  writeStats: true
-  forceSyncStatic: true
+caches:
+  images:
+    dir: :cacheDir/images
 
 params:
   assets:
