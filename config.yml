@@ -1,19 +1,16 @@
-baseURL: ""
+baseURL: "https://keofoxy.github.io/swift-lang-ru/"
 languageCode: en-us
 title: Swift Lang Ru
 theme: PaperMod
 
 params:
-  # homeInfoParams:
-  #   Title: "Добро пожаловать в русскоязычное сообщество Swift разработчиков"
-  #   Content: Welcome to my blog. Here you'll find a lot of cool information about a lot of cool stuff.
-  socialIcons:
-    - name: telegram
-      url: "https://facebook.com/"
-    - name: x
-      url: "https://x.com/"
-    - name: github
-      url: "https://github.com/"
+  # socialIcons:
+  #   - name: telegram
+  #     url: "https://facebook.com/"
+  #   - name: x
+  #     url: "https://x.com/"
+  #   - name: github
+  #     url: "https://github.com/"
 
   cover:
     linkFullImages: true
