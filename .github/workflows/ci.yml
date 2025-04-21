@@ -24,8 +24,7 @@ jobs:
 
     - name: Build site
       run: |
-        hugo --minify --gc --config config.yml
-        touch public/.nojekyll  # Важно для обработки Hugo
+        hugo --minify --gc --config config.yml --baseURL "${{ github.repository_owner }}.github.io/${{ github.repository_name }}/"
 
     - name: Verify public files
       run: ls -la public/

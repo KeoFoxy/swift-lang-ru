@@ -2,6 +2,8 @@ baseURL: "https://keofoxy.github.io/swift-lang-ru/"
 languageCode: en-us
 title: Swift Lang Ru
 theme: PaperMod
+relativeURLs: true
+canonifyURLs: true
 
 params:
   # socialIcons:
@@ -17,6 +19,8 @@ params:
   
   ShowBreadCrumbs: true
   ShowReadingTime: true
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
 
 menu:
   main:
