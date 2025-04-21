@@ -1,50 +1,70 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches:
-      - master
+    branches: [master]
+  push:
+    branches: [master]
   workflow_dispatch:
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Set up Hugo
+      uses: actions/checkout@v4
+
+    - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: '0.80.0'
+        extended: true
 
-    - name: Install dependencies
+    - name: Build site
+      run: hugo --minify --gc
+
+    - name: Check internal links
       run: |
-        hugo --version
-
-    - name: Build the site
-      run: hugo --minify
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-        branch: gh-pages
-        folder: public
-        token: ${{ secrets.GITHUB_TOKEN }}
+        apt-get install -y linkchecker
+        linkchecker http://localhost --check-extern -f linkcheckerrc
+      working-directory: public
 
   lint:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Run Hugo Linter
+      uses: actions/checkout@v4
+
+    - name: Markdown Lint
+      uses: actionshub/markdownlint@2
+      with:
+        config_file: .markdownlint.yml
+        args: "--fix"
+
+    - name: Check image formats
       run: |
-        hugo --gc --minify
+        find content/ static/ -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.webp" \) || exit 1
+
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: [validate, lint]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.80.0'
+        extended: true
+
+    - name: Build site
+      run: hugo --minify --gc
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        force_orphan: true
