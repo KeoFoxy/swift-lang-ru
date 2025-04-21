@@ -2,7 +2,7 @@ baseURL: "https://keofoxy.github.io/swift-lang-ru/"
 languageCode: en-us
 title: Swift Lang Ru
 theme: PaperMod
-relativeURLs: true
+relativeURLs: false
 canonifyURLs: true
 uglyURLs: false
 
@@ -11,13 +11,6 @@ build:
   forceSyncStatic: true
 
 params:
-  # socialIcons:
-  #   - name: telegram
-  #     url: "https://facebook.com/"
-  #   - name: x
-  #     url: "https://x.com/"
-  #   - name: github
-  #     url: "https://github.com/"
   assets:
     disableFingerprinting: true
   env: production

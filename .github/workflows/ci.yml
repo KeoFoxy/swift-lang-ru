@@ -28,7 +28,7 @@ jobs:
           --minify \
           --gc \
           --config config.yml \
-          --baseURL "/swift-lang-ru/" \
+          --baseURL "https://keofoxy.github.io/swift-lang-ru/" \
           --buildFuture
 
     - name: Verify public files
