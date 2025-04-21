@@ -13,7 +13,6 @@ caches:
 params:
   assets:
     disableFingerprinting: true
-  env: production
 
   cover:
     linkFullImages: true
