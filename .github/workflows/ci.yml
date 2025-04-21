@@ -11,15 +11,15 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout code with submodules
       uses: actions/checkout@v4
       with:
         submodules: recursive
 
-    - name: Debug files structure
+    - name: Verify themes directory
       run: |
-        ls -la
         ls -la themes/
+        ls -la themes/PaperMod/
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -30,10 +30,7 @@ jobs:
     - name: Build site
       run: hugo --minify --gc --config config.yml
       env:
-        HUGO_ENV: production
-
-    - name: Verify generated files
-      run: ls -la public/
+        HUGO_ENVIRONMENT: production
 
   # lint:
   #   runs-on: ubuntu-latest
