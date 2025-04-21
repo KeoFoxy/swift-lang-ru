@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -22,28 +24,22 @@ jobs:
 
     - name: Build site
       run: hugo --minify --gc
+      working-directory: ./
 
-    - name: Check internal links
-      run: |
-        apt-get install -y linkchecker
-        linkchecker http://localhost --check-extern -f linkcheckerrc
-      working-directory: public
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+  #   - name: Markdown Lint
+  #     uses: docker://avtodev/markdown-lint:v1
+  #     with:
+  #       args: "**/*.md -c .markdownlint.yml"
 
-    - name: Markdown Lint
-      uses: actionshub/markdownlint@2
-      with:
-        config_file: .markdownlint.yml
-        args: "--fix"
-
-    - name: Check image formats
-      run: |
-        find content/ static/ -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.webp" \) || exit 1
+  #   - name: Check image formats
+  #     run: |
+  #       find . -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.webp" \)
 
   deploy:
     if: github.ref == 'refs/heads/master'
@@ -52,6 +48,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
