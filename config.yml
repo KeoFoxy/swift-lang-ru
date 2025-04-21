@@ -4,6 +4,11 @@ title: Swift Lang Ru
 theme: PaperMod
 relativeURLs: true
 canonifyURLs: true
+uglyURLs: false
+
+build:
+  writeStats: true
+  forceSyncStatic: true
 
 params:
   # socialIcons:
@@ -13,6 +18,9 @@ params:
   #     url: "https://x.com/"
   #   - name: github
   #     url: "https://github.com/"
+  assets:
+    disableFingerprinting: true
+  env: production
 
   cover:
     linkFullImages: true

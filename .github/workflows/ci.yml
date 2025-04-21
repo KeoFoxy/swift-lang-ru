@@ -24,7 +24,12 @@ jobs:
 
     - name: Build site
       run: |
-        hugo --minify --gc --config config.yml --baseURL "${{ github.repository_owner }}.github.io/${{ github.repository_name }}/"
+        hugo \
+          --minify \
+          --gc \
+          --config config.yml \
+          --baseURL "/swift-lang-ru/" \
+          --buildFuture
 
     - name: Verify public files
       run: ls -la public/
